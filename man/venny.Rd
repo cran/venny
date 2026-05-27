@@ -74,5 +74,6 @@ Venn diagram
 }
 \examples{
 lst <- LGL23$DEGs
-venny(lst)
+setLabelPosition <- set_label_position(hjust = c(0.2, -0.5, 0.5, -0.2))
+venny(lst, set.label.position = setLabelPosition)
 }

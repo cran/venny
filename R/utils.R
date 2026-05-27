@@ -13,7 +13,7 @@
 #' venn_summary(LGL23$DEGs)
 venn_summary <- function(
         data = list(),
-        show_elements = FALSE
+        show_elements = TRUE
 ) {
     if ( ! inherits(data, "list") ) stop("`data` should be a list.")
     if (length(data) < 2) stop("Should be more than 1 set.")
@@ -71,8 +71,9 @@ venn_summary <- function(
             table = df0,
             set_names_ref = set_names_ref
         )
-        return(ret)
     }
+    
+    return(ret)
 }
 
 

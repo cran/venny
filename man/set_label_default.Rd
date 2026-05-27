@@ -2,9 +2,12 @@
 % Please edit documentation in R/params.R
 \name{set_label_default}
 \alias{set_label_default}
+\alias{subset_label_default}
 \title{Set labels}
 \usage{
 set_label_default(n_sets)
+
+subset_label_default(n_sets)
 }
 \arguments{
 \item{n_sets}{An integer.}

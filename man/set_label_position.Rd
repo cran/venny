@@ -4,6 +4,7 @@
 \alias{set_label_position}
 \alias{subset_label_position}
 \alias{subset_count_position}
+\alias{subset_percentage_position}
 \title{Set label position}
 \usage{
 set_label_position(hjust = 0, vjust = 0, show = NULL, hide = NULL)
@@ -11,6 +12,8 @@ set_label_position(hjust = 0, vjust = 0, show = NULL, hide = NULL)
 subset_label_position(hjust = 0, vjust = 0, show = NULL, hide = NULL)
 
 subset_count_position(hjust = 0, vjust = 0, show = NULL, hide = NULL)
+
+subset_percentage_position(hjust = 0, vjust = 0, show = NULL, hide = NULL)
 }
 \arguments{
 \item{hjust}{A numeric vector (default: 0).

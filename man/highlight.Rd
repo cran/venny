@@ -7,11 +7,11 @@
 highlight(
   venn,
   setops,
-  color = "transparent",
-  linewidth = 1.5,
+  color = "black",
+  linewidth = 1.2,
   linetype = "solid",
   fill = "black",
-  alpha = 0.4,
+  alpha = 0.2,
   ...
 )
 }

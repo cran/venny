@@ -187,15 +187,18 @@ setdiff.venny_setops <- function(x, y, ...)
 highlight <- function(
         venn,
         setops,
-        color = "transparent",
-        linewidth = 1.5,
+        color = "black",
+        linewidth = 1.2,
         linetype = "solid",
         fill = "black",
-        alpha = 0.4,
+        alpha = 0.2,
         ...
 ) {
     x <- NULL
     y <- NULL
+    
+    if (!is.recursive(setops)) setops <- list(setops)
+        
     for (i in seq_along(setops)) {
         ggpoly <- ggplot2::geom_polygon(
             data = setops[[i]],

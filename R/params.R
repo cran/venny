@@ -27,10 +27,12 @@ ellipse_position <- function() {
             e3 = c(x0 =  0.45, y0 = -0.45, a = 1, b = 1, angle = 0)
         ),
         list(
-            e1 = c(x0 = -1.1, y0 = -0.569, a = 2.5, b = 1.35, angle = -45),
+            # e1 = c(x0 = -1.1, y0 = -0.569, a = 2.5, b = 1.35, angle = -45),
+            e1 = c(x0 = -1.09, y0 = -0.569, a = 2.5, b = 1.35, angle = -45),
             e2 = c(x0 = 0, y0 = 0, a = 2.5, b = 1.2, angle = -50),
             e3 = c(x0 = 0, y0 = 0, a = 2.5, b = 1.2, angle = 50),
-            e4 = c(x0 = 1.1, y0 = -0.569, a = 2.5, b = 1.35, angle = 45)
+            # e4 = c(x0 = 1.1, y0 = -0.569, a = 2.5, b = 1.35, angle = 45)
+            e4 = c(x0 = 1.09, y0 = -0.569, a = 2.5, b = 1.35, angle = 45)
         )
     )
 }
@@ -229,6 +231,8 @@ set_label_font <- function(
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 # Subset label ====
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+#' @rdname set_label_default
+#' @export
 subset_label_default <- function(n_sets) {
     switch(
         n_sets,
@@ -414,12 +418,13 @@ subset_count_position <- function(
             for (i in seq_along(lst))
             {
                 subset_label <- names(lst[i])
+                lst[[subset_label]] <- lst[[i]] + c(hjust[i], vjust[i])  # fixing bug
                 if ( ! is.null(show) & ! subset_label %in% show )
                     lst[subset_label] <- list(NULL)
                 if ( ! is.null(hide) & subset_label %in% hide )
                     lst[subset_label] <- list(NULL)
-                if (is.null(show) & is.null(hide))
-                    lst[[subset_label]] <- lst[[i]] + c(hjust[i], vjust[i])
+                # if (is.null(show) & is.null(hide))
+                #     lst[[subset_label]] <- lst[[i]] + c(hjust[i], vjust[i])
             }
             return(lst)
         }
@@ -451,6 +456,91 @@ subset_count_font <- function(
          size = size,
          color = color,
          angle = angle)
+}
+
+
+#' @rdname set_label_position
+#' @export
+subset_percentage_position <- function(
+        hjust = 0,
+        vjust = 0,
+        show = NULL,
+        hide = NULL
+) {
+    pos <- list(
+        list(
+            "A"  = c(-1, -0.35),
+            "B"  = c( 1, -0.35),
+            "AB" = c( 0, -0.35)
+        ),
+        list(
+            "A"   = c( 0.00,  0.7),
+            "B"   = c(-0.90, -0.80),
+            "C"   = c( 0.90, -0.80),
+            "AB"  = c(-0.65, -0.15),
+            "AC"  = c( 0.65, -0.15),
+            "BC"  = c( 0.00, -1.20),
+            "ABC" = c( 0.00, -0.40)
+        ),
+        list(
+            "A"    = c(-2.4,  0.2),
+            "B"    = c(-0.9,  1.4),
+            "C"    = c( 0.9,  1.4),
+            "D"    = c( 2.4,  0.2),
+            "AB"   = c(-1.5,  0.5),
+            "BC"   = c( 0.0,  0.8),
+            "CD"   = c( 1.5,  0.5),
+            "AC"   = c(-1.4, -1.1),
+            "AD"   = c( 0.0, -2.4),
+            "BD"   = c( 1.4, -1.1),
+            "ABC"  = c(-0.7, -0.1),
+            "BCD"  = c( 0.7, -0.1),
+            "ACD"  = c(-0.7, -1.7),
+            "ABD"  = c( 0.7, -1.7),
+            "ABCD" = c( 0.0, -0.9)
+        )
+    )
+    
+    tmp_pos <- lapply(
+        pos,
+        function(lst)
+        {
+            n_subsets <- length(lst)
+            
+            if (length(hjust) > 1)
+                hjust <- fixed_length(x = hjust, len = n_subsets, fill_with = 0)
+            else
+                hjust <- fixed_length(x = hjust, len = n_subsets)
+            
+            if (length(vjust) > 1)
+                vjust <- fixed_length(x = vjust, len = n_subsets, fill_with = 0)
+            else
+                vjust <- fixed_length(x = vjust, len = n_subsets)
+            
+            for (i in seq_along(lst))
+            {
+                subset_label <- names(lst[i])
+                lst[[subset_label]] <- lst[[i]] + c(hjust[i], vjust[i])  # fixing bug
+                if ( ! is.null(show) & ! subset_label %in% show )
+                    lst[subset_label] <- list(NULL)
+                if ( ! is.null(hide) & subset_label %in% hide )
+                    lst[subset_label] <- list(NULL)
+                # if (is.null(show) & is.null(hide))
+                #     lst[[subset_label]] <- lst[[i]] + c(hjust[i], vjust[i])
+            }
+            return(lst)
+        }
+    )
+    
+    pos <- structure(
+        .Data = tmp_pos,
+        hjust = hjust,
+        vjust = vjust,
+        show = show,
+        hide = hide
+    )
+    
+    return(pos)
 }
 
 
